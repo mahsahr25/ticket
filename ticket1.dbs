@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="ticket1" id="Project_2db3d69" template="Default" database="MySql" >
+	<schema name="ticket1" >
+		<table name="blogs" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="title" type="varchar" length="20" jt="12" mandatory="y" />
+			<column name="description" type="text" jt="-1" />
+			<index name="pk_blog_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="categories" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="created_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<column name="updated_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<index name="pk_categories_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="comments" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="comment" type="text" jt="-1" mandatory="y" />
+			<column name="events_id" type="int" jt="4" mandatory="y" />
+			<column name="users_id" type="int" jt="4" mandatory="y" />
+			<index name="pk_comments_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_comments" unique="NORMAL" >
+				<column name="events_id" />
+			</index>
+			<index name="idx_comments_0" unique="NORMAL" >
+				<column name="users_id" />
+			</index>
+			<fk name="fk_comments_events" to_schema="ticket1" to_table="events" delete_action="cascade" update_action="cascade" >
+				<fk_column name="events_id" pk="id" />
+			</fk>
+			<fk name="fk_comments_users" to_schema="ticket1" to_table="users" delete_action="cascade" update_action="cascade" >
+				<fk_column name="users_id" pk="id" />
+			</fk>
+		</table>
+		<table name="contactus" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="title" type="varchar" length="20" jt="12" />
+			<column name="message" type="int" jt="4" mandatory="y" />
+			<column name="users_id" type="int" jt="4" />
+			<index name="pk_contactus_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_contactus" unique="NORMAL" >
+				<column name="users_id" />
+			</index>
+			<fk name="fk_contactus_users" to_schema="ticket1" to_table="users" delete_action="cascade" update_action="cascade" >
+				<fk_column name="users_id" pk="id" />
+			</fk>
+		</table>
+		<table name="dates" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="eventdate" type="varchar" length="200" jt="12" mandatory="y" />
+			<column name="created_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<column name="updated_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<index name="pk_dates_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="eventpoints" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="point" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="events_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="users_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<index name="pk_eventpoints" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_eventpoints" unique="NORMAL" >
+				<column name="events_id" options="ASC" />
+			</index>
+			<index name="idx_eventpoints_0" unique="NORMAL" >
+				<column name="users_id" />
+			</index>
+			<fk name="fk_eventpoints_events" to_schema="ticket1" to_table="events" delete_action="cascade" update_action="cascade" >
+				<fk_column name="events_id" pk="id" />
+			</fk>
+			<fk name="fk_eventpoints_users" to_schema="ticket1" to_table="users" delete_action="cascade" update_action="cascade" >
+				<fk_column name="users_id" pk="id" />
+			</fk>
+		</table>
+		<table name="events" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="categories_id" type="int" jt="4" mandatory="y" />
+			<column name="name" type="varchar" length="100" jt="12" />
+			<column name="director" type="varchar" length="100" jt="12" />
+			<column name="cast" type="varchar" length="300" jt="12" />
+			<column name="duration" type="varchar" length="100" jt="12" />
+			<column name="singer" type="varchar" length="100" jt="12" />
+			<column name="created_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<column name="updated_at" type="datetime" jt="93" />
+			<column name="halls_id" type="int" jt="4" mandatory="y" />
+			<column name="sanses_id" type="int" jt="4" />
+			<column name="genres_id" type="int" length="10" decimal="0" jt="4" />
+			<index name="pk_events_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_events" unique="NORMAL" >
+				<column name="categories_id" />
+			</index>
+			<index name="idx_events_0" unique="UNIQUE" >
+				<column name="halls_id" />
+				<column name="sanses_id" />
+			</index>
+			<index name="fk_events_shows" unique="NORMAL" >
+				<column name="sanses_id" />
+			</index>
+			<index name="idx_events_1" unique="NORMAL" >
+				<column name="genres_id" />
+			</index>
+			<fk name="fk_events_categories" to_schema="ticket1" to_table="categories" delete_action="cascade" update_action="cascade" >
+				<fk_column name="categories_id" pk="id" />
+			</fk>
+			<fk name="fk_events_halls" to_schema="ticket1" to_table="halls" delete_action="cascade" update_action="cascade" >
+				<fk_column name="halls_id" pk="id" />
+			</fk>
+			<fk name="fk_events_shows" to_schema="ticket1" to_table="sanses" delete_action="cascade" update_action="cascade" >
+				<fk_column name="sanses_id" pk="id" />
+			</fk>
+			<fk name="fk_events_genres" to_schema="ticket1" to_table="genres" delete_action="cascade" update_action="cascade" >
+				<fk_column name="genres_id" pk="id" />
+			</fk>
+		</table>
+		<table name="favorites" >
+			<column name="users_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="events_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<index name="idx_favorites" unique="UNIQUE" >
+				<column name="users_id" options="ASC" />
+				<column name="events_id" options="ASC" />
+			</index>
+			<index name="fk_favorites_events" unique="NORMAL" >
+				<column name="events_id" />
+			</index>
+			<fk name="fk_favorites_users" to_schema="ticket1" to_table="users" delete_action="cascade" update_action="cascade" >
+				<fk_column name="users_id" pk="id" />
+			</fk>
+			<fk name="fk_favorites_events" to_schema="ticket1" to_table="events" delete_action="cascade" update_action="cascade" >
+				<fk_column name="events_id" pk="id" />
+			</fk>
+		</table>
+		<table name="genres" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<index name="pk_genre_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="halls" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="location" type="varchar" length="200" jt="12" />
+			<column name="venues_id" type="int" jt="4" mandatory="y" />
+			<column name="created_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<column name="updated_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<index name="pk_halls_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_halls" unique="NORMAL" >
+				<column name="venues_id" />
+			</index>
+			<fk name="fk_halls_places" to_schema="ticket1" to_table="venues" delete_action="cascade" update_action="cascade" >
+				<fk_column name="venues_id" pk="id" />
+			</fk>
+		</table>
+		<table name="images" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="imageable_id" type="int" jt="4" mandatory="y" />
+			<column name="imageable_type" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="created_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<column name="updated_at" type="date" jt="91" >
+				<defo>curdate()</defo>
+			</column>
+			<index name="pk_images_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="myseats" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="row" type="int" jt="4" />
+			<column name="row_num" type="int" jt="4" />
+			<column name="number" type="varchar" length="200" jt="12" />
+			<column name="status" type="int" length="1" jt="4" />
+			<index name="pk_myseat_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="newsletters" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="email" type="varchar" length="300" jt="12" mandatory="y" />
+			<index name="pk_newsletters_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="orders" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="users_id" type="int" jt="4" mandatory="y" />
+			<column name="seatsections_id" type="int" jt="4" mandatory="y" />
+			<column name="num" type="int" jt="4" mandatory="y" />
+			<column name="orderdate" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="totalprice" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="discount" type="varchar" length="100" jt="12" />
+			<column name="finalprice" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="status" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="events_id" type="int" jt="4" mandatory="y" />
+			<column name="sanses_id" type="int" jt="4" />
+			<index name="pk_orders_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_orders" unique="NORMAL" >
+				<column name="users_id" />
+			</index>
+			<index name="idx_orders_0" unique="NORMAL" >
+				<column name="seatsections_id" />
+			</index>
+			<index name="idx_orders_1" unique="NORMAL" >
+				<column name="events_id" />
+			</index>
+			<index name="idx_orders_2" unique="NORMAL" >
+				<column name="sanses_id" />
+			</index>
+			<fk name="fk_orders_users" to_schema="ticket1" to_table="users" delete_action="cascade" update_action="cascade" >
+				<fk_column name="users_id" pk="id" />
+			</fk>
+			<fk name="fk_orders_seatsections" to_schema="ticket1" to_table="seatsections" delete_action="cascade" update_action="cascade" >
+				<fk_column name="seatsections_id" pk="id" />
+			</fk>
+			<fk name="fk_orders_events" to_schema="ticket1" to_table="events" delete_action="cascade" update_action="cascade" >
+				<fk_column name="events_id" pk="id" />
+			</fk>
+			<fk name="fk_orders_shows" to_schema="ticket1" to_table="sanses" delete_action="cascade" update_action="cascade" >
+				<fk_column name="sanses_id" pk="id" />
+			</fk>
+		</table>
+		<table name="prices" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="price" type="varchar" length="100" jt="12" mandatory="y" />
+			<index name="pk_prices_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="roles" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<index name="pk_roles_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="roles_users" >
+			<column name="users_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="roles_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<index name="idx_roles_users" unique="NORMAL" >
+				<column name="users_id" options="ASC" />
+			</index>
+			<index name="idx_roles_users_0" unique="NORMAL" >
+				<column name="roles_id" />
+			</index>
+			<fk name="fk_roles_users_roles" to_schema="ticket1" to_table="roles" delete_action="cascade" update_action="cascade" >
+				<fk_column name="roles_id" pk="id" />
+			</fk>
+			<fk name="fk_roles_users_users" to_schema="ticket1" to_table="users" delete_action="cascade" update_action="cascade" >
+				<fk_column name="users_id" pk="id" />
+			</fk>
+		</table>
+		<table name="sanses" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="st_time" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="end-time" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="dates_id" type="int" jt="4" mandatory="y" />
+			<column name="created_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<column name="updated_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<index name="pk_shows_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_shows" unique="NORMAL" >
+				<column name="dates_id" />
+			</index>
+			<fk name="fk_shows_dates" to_schema="ticket1" to_table="dates" delete_action="cascade" update_action="cascade" >
+				<fk_column name="dates_id" pk="id" />
+			</fk>
+		</table>
+		<table name="seats" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="row" type="int" jt="4" mandatory="y" />
+			<column name="number" type="int" jt="4" />
+			<column name="seatsections_id" type="int" jt="4" mandatory="y" />
+			<column name="statuses_id" type="int" length="1" jt="4" mandatory="y" />
+			<index name="pk_seats_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_seats" unique="NORMAL" >
+				<column name="seatsections_id" />
+			</index>
+			<index name="idx_seats_0" unique="NORMAL" >
+				<column name="statuses_id" />
+			</index>
+			<fk name="fk_seats_status" to_schema="ticket1" to_table="statuses" delete_action="cascade" update_action="cascade" >
+				<fk_column name="statuses_id" pk="id" />
+			</fk>
+			<fk name="fk_seats_seatsections" to_schema="ticket1" to_table="seatsections" delete_action="cascade" update_action="cascade" >
+				<fk_column name="seatsections_id" pk="id" />
+			</fk>
+		</table>
+		<table name="seats_sanses" >
+			<column name="seats_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="sanses_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<index name="idx_seats_sanses" unique="PRIMARY_KEY" >
+				<column name="seats_id" />
+				<column name="sanses_id" />
+			</index>
+			<fk name="fk_seats_sanses_seats" to_schema="ticket1" to_table="seats" delete_action="cascade" update_action="cascade" >
+				<fk_column name="seats_id" pk="id" />
+			</fk>
+			<fk name="fk_seats_sanses_sanses" to_schema="ticket1" to_table="sanses" delete_action="cascade" update_action="cascade" >
+				<fk_column name="sanses_id" pk="id" />
+			</fk>
+		</table>
+		<table name="seatsections" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="halls_id" type="int" jt="4" mandatory="y" />
+			<column name="prices_id" type="int" jt="4" />
+			<index name="pk_seatsections_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_seatsections" unique="NORMAL" >
+				<column name="halls_id" />
+			</index>
+			<index name="idx_seatsections_0" unique="NORMAL" >
+				<column name="prices_id" />
+			</index>
+			<fk name="fk_seatsections_halls" to_schema="ticket1" to_table="halls" delete_action="cascade" update_action="cascade" >
+				<fk_column name="halls_id" pk="id" />
+			</fk>
+			<fk name="fk_seatsections_prices" to_schema="ticket1" to_table="prices" delete_action="cascade" update_action="cascade" >
+				<fk_column name="prices_id" pk="id" />
+			</fk>
+		</table>
+		<table name="statuses" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="name" type="varchar" length="100" jt="12" />
+			<index name="pk_status_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="taggables" >
+			<column name="id" type="int" jt="4" mandatory="y" />
+			<column name="tags_id" type="int" jt="4" mandatory="y" />
+			<column name="taggable_id" type="int" jt="4" mandatory="y" />
+			<column name="taggable_type" type="varchar" length="100" jt="12" />
+		</table>
+		<table name="tags" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="name" type="varchar" length="100" jt="12" />
+			<column name="created_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<column name="updated_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<index name="pk_tags_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="tickets" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="orders_id" type="int" jt="4" mandatory="y" />
+			<column name="seats_id" type="int" jt="4" mandatory="y" />
+			<column name="tdate" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="tcode" type="varchar" length="100" jt="12" mandatory="y" />
+			<index name="pk_tickets_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_tickets" unique="NORMAL" >
+				<column name="orders_id" />
+			</index>
+			<index name="fk_tickets_seats" unique="NORMAL" >
+				<column name="seats_id" />
+			</index>
+			<fk name="fk_tickets_orders" to_schema="ticket1" to_table="orders" delete_action="cascade" update_action="cascade" >
+				<fk_column name="orders_id" pk="id" />
+			</fk>
+			<fk name="fk_tickets_seats" to_schema="ticket1" to_table="seats" delete_action="cascade" update_action="cascade" >
+				<fk_column name="seats_id" pk="id" />
+			</fk>
+		</table>
+		<table name="transactions" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="tdate" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="bank_name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="orders_id" type="int" jt="4" mandatory="y" />
+			<column name="status" type="varchar" length="100" jt="12" mandatory="y" />
+			<index name="pk_transactions_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_transactions" unique="NORMAL" >
+				<column name="orders_id" />
+			</index>
+			<fk name="fk_transactions_orders" to_schema="ticket1" to_table="orders" delete_action="cascade" update_action="cascade" >
+				<fk_column name="orders_id" pk="id" />
+			</fk>
+		</table>
+		<table name="users" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="username" type="varchar" length="100" jt="12" />
+			<column name="email" type="varchar" length="300" jt="12" mandatory="y" />
+			<column name="mobile" type="varchar" length="200" jt="12" mandatory="y" />
+			<column name="created_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<column name="updated_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<column name="password" type="varchar" length="100" jt="12" mandatory="y" />
+			<index name="pk_users_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="venues" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="phone" type="varchar" length="100" jt="12" />
+			<column name="address" type="varchar" length="200" jt="12" />
+			<column name="created_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<column name="updated_at" type="datetime" jt="93" >
+				<defo>current_timestamp()</defo>
+			</column>
+			<index name="pk_places_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="videos" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="videoable_id" type="int" jt="4" mandatory="y" />
+			<column name="videoable_type" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="created_at" type="datetime" jt="93" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="updated_at" type="datetime" jt="93" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<index name="pk_videos_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+	</schema>
+	<connector name="ticket1" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-8.0.18.jar" driver_desc="Standard" host="localhost" port="3306" instance="ticket1" user="root" />
+	<layout name="Default Layout" id="Layout_4f4db6f" show_relation="columns" >
+		<entity schema="ticket1" name="transactions" color="C1D8EE" x="256" y="544" />
+		<entity schema="ticket1" name="images" color="C1D8EE" x="1248" y="304" />
+		<entity schema="ticket1" name="comments" color="C1D8EE" x="976" y="624" />
+		<entity schema="ticket1" name="contactus" color="C1D8EE" x="1216" y="752" />
+		<entity schema="ticket1" name="newsletters" color="C1D8EE" x="896" y="800" />
+		<entity schema="ticket1" name="tags" color="C1D8EE" x="768" y="800" />
+		<entity schema="ticket1" name="roles" color="C1D8EE" x="272" y="864" />
+		<entity schema="ticket1" name="roles_users" color="3986C1" x="320" y="736" />
+		<entity schema="ticket1" name="dates" color="C1D8EE" x="656" y="112" />
+		<entity schema="ticket1" name="categories" color="C1D8EE" x="1296" y="176" />
+		<entity schema="ticket1" name="genres" color="C1D8EE" x="1216" y="48" />
+		<entity schema="ticket1" name="seatsections" color="C1D8EE" x="672" y="240" />
+		<entity schema="ticket1" name="favorites" color="3986C1" x="48" y="384" />
+		<entity schema="ticket1" name="eventpoints" color="3986C1" x="1120" y="592" />
+		<entity schema="ticket1" name="myseats" color="C1D8EE" x="1344" y="912" />
+		<entity schema="ticket1" name="prices" color="C1D8EE" x="464" y="112" />
+		<entity schema="ticket1" name="sanses" color="C1D8EE" x="896" y="368" />
+		<entity schema="ticket1" name="tickets" color="C1D8EE" x="784" y="592" />
+		<entity schema="ticket1" name="seats_sanses" color="3986C1" x="768" y="400" />
+		<entity schema="ticket1" name="venues" color="C1D8EE" x="1024" y="48" />
+		<entity schema="ticket1" name="halls" color="C1D8EE" x="864" y="144" />
+		<entity schema="ticket1" name="users" color="C1D8EE" x="224" y="144" />
+		<entity schema="ticket1" name="videos" color="C1D8EE" x="1232" y="480" />
+		<entity schema="ticket1" name="events" color="C1D8EE" x="1040" y="208" />
+		<entity schema="ticket1" name="orders" color="C1D8EE" x="432" y="448" />
+		<entity schema="ticket1" name="taggables" color="C1D8EE" x="576" y="768" />
+		<entity schema="ticket1" name="statuses" color="C1D8EE" x="512" y="272" />
+		<entity schema="ticket1" name="seats" color="C1D8EE" x="624" y="368" />
+		<entity schema="ticket1" name="blogs" color="C1D8EE" x="1056" y="800" />
+	</layout>
+</project>
