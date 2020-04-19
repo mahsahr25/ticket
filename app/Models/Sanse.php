@@ -18,4 +18,7 @@ class Sanse extends Model
     public function Seat(){
         return $this->belongsToMany('App\Models\Seat');
     }
+    public function Hall_sanse(){
+        return $this->hasMany('App\Models\Hall_sanse');
+    }
 }

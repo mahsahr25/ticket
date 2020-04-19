@@ -11,16 +11,24 @@
              <a class="btn confer-btn" href="{{route('m_events')}}">فیلم‌های بیشتر</a>
            </div>
        </div>
-
     <div class="row pl-2 pr-2 pb-5" >
-        <div class="col pt-3 hvr-pop" style="max-height:25%" >
-            <a href="{{route('single_event')}}">
-            <img src="{{asset('assets/img/feature-movies/African Violet.jpg')}}" style="width:100%;height:100%" alt="">
+    @foreach($movies as $movie)
+
+        <div class="col-12 col-lg-3 pt-3 hvr-pop" style="max-height:25%" >
+            @foreach($movie->image()->take('1')->get() as $mphoto)
+
+            <a href="{{url('single_event/'.$movie->id)}}">
+            {{-- <img src="{{asset('storage/'.$photo['name'])}}" style="width:100%;height:100%" alt=""> --}}
+            <img src="{{$mphoto['name']}}" style="width:100%;height:100%" alt="">
+
 
             </a>
-            <h5 class="pt-2" style="text-align:center;">بنفشه آفریقایی</h5>
+            @endforeach
+
+            <h5 class="pt-2" style="text-align:center;">{{$movie->name}}</h5>
         </div>
-        <div class="col pt-3 hvr-pop" >
+    @endforeach
+        {{-- <div class="col pt-3 hvr-pop" >
             <a href="{{route('single_event')}}">
             <img src="{{asset('assets/img/feature-movies/Macerated Nimrod _ poster by The 3X4.jpg')}}"  style="width:100%;height:100%"  alt="">
 
@@ -69,7 +77,7 @@
         </div>
         <div class="col pt-3 hvr-pop" ><img src="{{asset('assets/img/feature-movies/motreb.jpg')}}" style="width:100%;height:100%" alt="">
             <h5 class="pt-2" style="text-align:center;">مطرب</h5>
-        </div>
+        </div> --}}
     </div>
-    </div>
+</div>
 </section>

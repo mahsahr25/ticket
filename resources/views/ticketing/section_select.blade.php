@@ -29,9 +29,9 @@ input[type=number]::-webkit-outer-spin-button {
                 </div>
                 <div style="margin-top: 60px; margin-right: 40px;">
 
-                    <p class="mfilmname mt-2" dir="rtl" align="right">نام رویداد</p>
-                    <p align="right" class="secsalonname">سه شنبه - ساعت 17</p>
-                    <p align="right" class="secsalonname">سینما آزادی - سالن 1</p>
+                    <p class="mfilmname mt-2" dir="rtl" align="right">{{$hall_sanse->event->name}}</p>
+                    <p align="right" class="secsalonname">ساعت&nbsp;{{$hall_sanse->sanse->st_time}}</p>
+                    <p align="right" class="secsalonname">{{$hall_sanse->hall->venue->name}} -&nbsp;سالن&nbsp;{{$hall_sanse->hall->name}}</p>
 
                 </div>
 

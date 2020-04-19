@@ -13,7 +13,7 @@ class Event extends Model
         return $this->belongsTo('App\Models\Category');
     }
     public function Hall(){
-        return $this->belongsTo('App\Models\Hall');
+        return $this->belongsToMany('App\Models\Hall');
     }
     public function Sanse(){
         return $this->belongsTo('App\Models\Sanse');
@@ -38,6 +38,12 @@ class Event extends Model
     }
     public function Tag(){
         return $this->morphtoMany('App\Models\Tag','taggable');
+    }
+    public function Venue(){
+        return $this->belongsToMany('App\Models\Venue');
+    }
+    public function Hall_sanse(){
+        return $this->hasMany('App\Models\Hall_sanse');
     }
 
 }

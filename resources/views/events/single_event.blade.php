@@ -18,7 +18,10 @@
                     <div class="single-speaker-area bg-gradient-overlay-2 wow fadeInUp" data-wow-delay="300ms">
                         <!-- event image -->
                         <div class="speaker-single-thumb">
-                            <img src="{{asset('assets/img/feature-movies/Macerated Nimrod _ poster by The 3X4.jpg')}}" alt="" style="height: 280px;width:100%;">
+                            {{-- <img src="{{asset('assets/img/feature-movies/Macerated Nimrod _ poster by The 3X4.jpg')}}" alt="" style="height: 280px;width:100%;"> --}}
+                             {{-- @foreach($event->image()->take('1')->get() as $ephoto) --}}
+                            <img src="{{$poster[0]->name}}" alt="" style="height: 280px;width:100%;">
+                             {{-- @endforeach --}}
                         </div>
 
 
@@ -48,8 +51,8 @@
 
                         </a>
                     </div>
-                    <p class="mfilmname mt-1" dir="rtl" align="right">نام رویداد</p>
-                    <p class="mfilmdirector" dir="rtl" align="right">کارگردان</p>
+                    <p class="mfilmname mt-1" dir="rtl" align="right">{{$event->name}}</p>
+                    <p class="mfilmdirector" dir="rtl" align="right">کارگردان: &nbsp;{{$event->director}}</p>
                     <div class="more-speaker-btn text-center mt-20  fadeInUp" data-wow-delay="300ms">
                         <a href="#msans" style="color: white;"><button class="btn  mbuy" style="font-size: 18px;">
                                 <i class="zmdi zmdi-shopping-cart"
@@ -69,7 +72,11 @@
             <!-- about event -->
             <div class="col-4 border shadow" style="height: 300px;">
                 <p style="font-size: 24px;" dir="rtl" align="right"><i class="zmdi zmdi-triangle-down"
-                        style="margin-left: 7px;color:#df42b1;"></i>درباره رویداد</p>
+                        style="margin-left: 7px;color:#df42b1;"></i>عوامل</p>
+                        <p>
+                            {{$event->cast}}
+                        </p>
+                        <p><b>زمان:</b>&nbsp;{{$event->duration}}&nbsp;دقیقه</p>
             </div>
             <div class="col-1"></div>
             <!-- event images -->
@@ -77,7 +84,12 @@
                 <p style="font-size: 24px" dir="rtl" align="right"><i class="zmdi zmdi-triangle-down"
                         style="margin-left: 7px;color:#df42b1;"></i>تصاویر</p>
                 <div class="d-flex col-12 mb-3">
-                    <div class="col-4 " style="height:190px">
+                    @foreach($event->image()->get() as $photo)
+                        <div class="col-4 " style="height:190px">
+                                <img src="{{$photo['name']}}" alt="" class="border shadow" style="height:100%">
+                        </div>
+                    @endforeach
+                    {{-- <div class="col-4 " style="height:190px">
                         <img src="{{asset('assets/img/mimg/nimrooz1.jpg')}}" alt="" class="border shadow" style="height:100%">
                     </div>
                     <div class="col-4" style="height:190px">
@@ -85,7 +97,7 @@
                     </div>
                     <div class="col-4" id="msans" style="height:190px">
                         <img src="{{asset('assets/img/mimg/nimrooz3.jpg')}}" alt="" class="border shadow" style="height:100%">
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -96,13 +108,82 @@
         <!--===== Shows =======  -->
         <div class="col-12 ">
             <p id="mshows" style="font-size: 24px" dir="rtl" align="center">سانس ها و سالن ها</p>
+            @foreach($event->venue as $venue)
             <div class="more-speaker-btn text-center mt-20 py-5 " data-wow-delay="300ms">
+                    <button class="btn confer-btn mcinemas col-5 " style="font-size: 24px;" data-toggle="collapse"
+                        data-target="#m{{$venue['id']}}"> <i class="zmdi  zmdi-camera-roll" style="margin-left:15px;"></i>
+                         {{$venue['name']}}</button>
+            </div>
+            <div id="m{{$venue['id']}}" class="collapse mshows">
+                <div class=" single-schedule-area single-page d-flex flex-wrap justify-content-between align-items-center  fadeInUp "
+                    data-wow-delay="300ms">
+                @foreach($venue->hall as $hall)
+                @foreach($event->hall_sanse as $hall_sanse)
+                    @if($hall->id==$hall_sanse->hall_id)
+                    <!-- Single Show -->
+                    <div class=" schedule-time-place mb-3">
+                        <p dir="rtl" align="right"><i class="zmdi zmdi-calendar" style="margin-left: 5px;"></i> سه
+                            شنبه</p>
+                        <p dir="rtl" align="right"><i class="zmdi zmdi-time" style="margin-left: 5px;"></i>ساعت&nbsp; {{$hall_sanse->sanse->st_time}}
+                            -&nbsp;سالن &nbsp;{{$hall->name}}</p>
+                        <div class="d-flex justify-content-end">
+                            <div>
+                                <a href="{{route('seat_section')}}" class="px-3" style="color: white;">
+                                    <button class="px-3 py-1 ml-4"
+                                        style="border-radius: 23px;background-color: rgb(57,132,60);color: white;border: none;">
+                                        نمایش سالن
+                                    </button>
+                                </a>
+                            </div>
+                            <div>
+                                <a href="{{url('section_select/'.$hall_sanse->id)}}" class="px-2" >
+                                    <button class="px-2 py-1 " style="border-radius: 23px;">
+                                        انتخاب</button>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    @endif
+                    @endforeach
+                @endforeach
+
+
+                    <!-- Single Show -->
+                    {{-- <div class=" schedule-time-place">
+                        <p dir="rtl" align="right"><i class="zmdi zmdi-calendar" style="margin-left: 5px;"></i>
+                            چهارشنبه</p>
+                        <p dir="rtl" align="right"><i class="zmdi zmdi-time" style="margin-left: 5px;"></i> ساعت
+                            19:30 - سالن 2</p>
+                        <div class="d-flex justify-content-end">
+                            <div>
+                                <a href="#" class="px-2" style="color: white;">
+                                    <button class="px-3 py-1 ml-4"
+                                        style="border-radius: 23px;background-color: rgb(57,132,60);color: white;border: none;">
+                                         نمایش سالن
+                                    </button>
+                                </a>
+                            </div>
+                            <div>
+                                <a href="#" class="px-2">
+                                    <button class="px-2 py-1  " style="border-radius: 23px;">
+                                        انتخاب
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div> --}}
+                </div>
+
+            </div>
+            @endforeach
+            {{-- <div class="more-speaker-btn text-center mt-20 py-5 " data-wow-delay="300ms">
                 <button class="btn confer-btn mcinemas col-5 " style="font-size: 24px;" data-toggle="collapse"
                     data-target="#mshow"> <i class="zmdi  zmdi-camera-roll" style="margin-left:15px;"></i>سینما
                     آزادی </button>
-            </div>
+            </div> --}}
 
-            <div id="mshow" class="collapse mshows">
+            {{-- <div id="mshow" class="collapse mshows">
                 <div class=" single-schedule-area single-page d-flex flex-wrap justify-content-between align-items-center  fadeInUp "
                     data-wow-delay="300ms">
                     <!-- Single Show -->
@@ -156,7 +237,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- ==== End of Shows -->
 
 <br><br>
