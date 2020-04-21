@@ -18,4 +18,8 @@ class Seatsection extends Model
     public function Seat(){
         return $this->hasMany('App\Models\Seat');
     }
+
+    public function Testseat(){
+        return $this->hasMany('App\Models\Testseat');
+    }
 }

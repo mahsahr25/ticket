@@ -85,7 +85,7 @@ $('arrange').ready(function() {
             // },
 
             success: function(response,status){
-                alert(response['success']);
+                // alert(response['success']);
 
 
             },
@@ -105,22 +105,30 @@ $('arrange').ready(function() {
     $('div').click(function() {
         var id = $(this).attr('id');
         $('#'+id).addClass("none");
-        // var sib=$('#'+id).text();
-        var sibcount=$('#'+id).nextUntil("button").text().length;
-        // alert(sib);
-        var a=1
-        // for(i=1;i<=sibcount;i++){
 
-        // }
-        var newsib=sib-1;
-        $('#'+id).nextAll().text(newsib);
-        // alert(sib);
+        $.ajax({
+            // url: "http://localhost/myphp/tamrin9-1/registercontroller/Register",
+            url: "/seat_delete/{id}",
 
 
-        // alert(text);
+            dataType:'json',
+            type:'GET',
+            data:{"seatid":id
+
+            },
+            // headers: {
+            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            // },
+
+            success: function(response,status){
+                // alert(response['success']);
 
 
-        // alert(id);
+            },
+                error: function(XMLHttpRequest,textStatus,errorThrown){
+
+            }
+            });
 
 
     });

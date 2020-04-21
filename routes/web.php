@@ -38,6 +38,12 @@ Route::get('/seat_arrange/{id}','SeatController@seat_arrange')->name('seat_arran
 Route::get('/testseat_save','SeatController@testseat_save')->name('testseat_save');
 Route::get('/testseat_index','SeatController@testseat_index')->name('testseat_index');
 Route::get('/seat_shift/{id}','SeatController@seat_shift')->name('seat_shift');
+Route::get('/seat_delete/{id}','SeatController@seat_delete')->name('seat_delete');
+Route::get('/testseatshow','SeatController@testseatshow')->name('testseatshow');
+Route::get('/testseatevent','SeatController@testseatevent')->name('testseatevent');
+
+
+
 
 
 

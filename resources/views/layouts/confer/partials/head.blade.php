@@ -14,6 +14,8 @@
 
     <!-- Stylesheet -->
 <link rel="stylesheet" href="{{asset('assets/style.css')}}">
+<link rel="stylesheet"  href="{{asset('assets/flaticon2/font/flaticon.css')}}">
+
 <link rel="stylesheet" href="{{asset('assets/mstyle.css')}}">
 <link rel="stylesheet" href="{{asset('assets/S-style.css')}}">
 <link rel="stylesheet" href="{{asset('assets/loaderstyle.css')}}">

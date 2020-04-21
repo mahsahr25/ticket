@@ -5,15 +5,17 @@
     .seat{
         width:50px;
         height: 50px;
-        background-color: darkgreen;
+        /* background-color: darkgreen; */
         color: white;
         margin-left: 2px;
         margin-top: 2px;
         line-height: 50px;
         text-align: center;
+        position: relative;
+
     }
     .half{
-        margin-right: 25px;
+        margin-right: 20px;
         /* background-color: aquamarine; */
     }
     .rownum{
@@ -35,7 +37,7 @@
         {{-- <p>{{$seat->totalrow}}</p> --}}
          @for($i=($maxrow);$i>=1;$i--)
         <div class="row m{{$i}}" >
-                <button class="mr-1 mb-1 px-2" id="m{{$i}}">شیفت</button>
+                <button class=" mb-2 px-2" id="m{{$i}}">شیفت</button>
                 {{-- <button class="mr-1 mb-1 px-2" id="d{{$i}}">حذف</button> --}}
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -47,7 +49,10 @@
 
                 @for($j=1;$j<=$maxseat;$j++)
                 @if($j==$seat->number)
-                <div class="seat" id="{{$seat->id}}">{{$j}}</div>
+                <div class="seat" id="{{$seat->id}}">
+                    <i class="flaticon-chair" style="color:rgb(0,168,0)"></i>
+                    <p class="text-center"style="position:absolute;top:3px;left:45%;color:white;"><b>{{$j}}</b></p>
+                </div>
                 @endif
                 @endfor
                 @endif
